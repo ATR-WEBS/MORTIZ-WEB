@@ -340,12 +340,14 @@ h1, h2, h3, h4, h5, h6 {
    por eso mismo: para quien no maneja mucho de webs, tiene que notarse a
    simple vista donde hay que tocar. */
 .art {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
   text-decoration: none;
   cursor: pointer;
+  isolation: isolate;
 }
 
 /* Anillo dorado al navegar con teclado (Tab): sin esto un enlace que ocupa
@@ -443,43 +445,50 @@ h1, h2, h3, h4, h5, h6 {
   padding: 12px 26px 13px;
   text-align: center;
   background:
-    /* canto superior en luz y canto inferior en sombra: da el grueso del tablon */
-    linear-gradient(180deg, rgb(150 124 86 / 0.16) 0 2px, transparent 2px,
-                    transparent calc(100% - 3px), rgb(0 0 0 / 0.55) calc(100% - 3px)),
-    /* extremos comidos por el uso */
-    linear-gradient(90deg, rgb(0 0 0 / 0.5), transparent 14%, transparent 86%, rgb(0 0 0 / 0.5)),
+    /* deja la madera un poco mas clara y con un tono cafe-calido */
+    linear-gradient(180deg, rgb(160 122 74 / 0.24) 0 2px, transparent 2px,
+                    transparent calc(100% - 3px), rgb(0 0 0 / 0.38) calc(100% - 3px)),
+    linear-gradient(90deg, rgb(0 0 0 / 0.45), transparent 14%, transparent 86%, rgb(0 0 0 / 0.45)),
+    linear-gradient(180deg, rgb(69 47 35 / 0.65), rgb(32 21 18 / 0.80)),
     url("../img/ui/wood.svg") repeat;
-  background-size: auto, auto, 240px 64px;
+  background-size: auto, auto, auto, 240px 64px;
   transition: box-shadow 0.3s ease;
+  isolation: isolate;
 }
 
 /* El cartel es AHORA el boton entero (ya no lleva nombre ni conteo, eso se
-   fue al lienzo), asi que el aviso de "esto se puede tocar" es un resplandor
-   dorado alrededor de la propia madera, en vez de una caja metida dentro. */
+   fue al lienzo). Mantener el resplandor muy discreto para que la madera no
+   gane un borde amarillo que desentone con el tono cafe de la placa. */
 .art:hover .art__plaque,
 .art:focus-visible .art__plaque {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--gold), transparent 35%),
-    0 0 18px rgb(199 154 78 / 0.3);
+   0 0 0 1px rgb(91 66 49 / 0.24),
+   0 6px 18px rgb(0 0 0 / 0.18);
 }
 
-/* Las dos cadenas. Van en % del ancho, asi acompañan al cartel mida lo que mida. */
+/* Las dos cadenas. Van en % del ancho, asi acompañan al cartel mida lo que mida.
+   Quedan por detras del cartel para que parezcan parte del agarre y no una
+   capa puesta encima de la madera. */
 .art__plaque::before,
 .art__plaque::after {
   content: "";
   position: absolute;
-  /* La cadena tiene que subir ~25px por encima del cartel: el SVG del marco
-     lleva 30/981 de margen transparente abajo (~10px), asi que si la cadena
-     acaba en el borde del elemento queda a media pared. Medido, no estimado. */
+  z-index: -1;
   bottom: calc(100% - 5px);
   width: 14px;
   height: 68px;
   background: url("../img/ui/chain-v.svg") no-repeat center top;
   background-size: 14px 68px;
+  pointer-events: none;
 }
 
 .art__plaque::before { left: 20%; }
 .art__plaque::after  { right: 20%; }
+
+.art__plaque > .art__cta {
+  position: relative;
+  z-index: 1;
+}
 
 /* El rotulo ahora vive DENTRO del cuadro, como el titulo grabado en la propia
    pintura. El degradado es lo que lo hace legible: solo oscurece la franja
@@ -522,28 +531,19 @@ h1, h2, h3, h4, h5, h6 {
   text-shadow: 0 1px 3px rgb(0 0 0 / 0.85);
 }
 
-/* El texto del boton. El cartel de madera de alrededor ya hace de boton (con
-   su propio resplandor al pasar el cursor); esto es solo la etiqueta. */
+/* El texto del boton. La madera de la placa tiene un tono cafe, asi que la
+   etiqueta debe ir en ese mismo rango para que la pieza se vea unificada y no
+   demasiado amarilla. */
 .art__cta {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
   font-family: var(--nav-font);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--gold), #f0e2bb 20%);
-}
-
-.art__cta-arrow {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-.art:hover .art__cta-arrow,
-.art:focus-visible .art__cta-arrow {
-  transform: translateX(3px);
+  color: #f1d7a9;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.85), 0 0 12px rgb(116 79 48 / 0.38);
 }
 
 @media (max-width: 767px) {
