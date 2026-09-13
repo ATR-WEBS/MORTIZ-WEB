@@ -72,13 +72,16 @@
     radial-gradient(60% 100% at 20% 100%, rgb(150 132 180 / 0.20), transparent 70%),
     radial-gradient(55% 100% at 62% 100%, rgb(126 110 158 / 0.16), transparent 72%),
     radial-gradient(70% 100% at 95% 100%, rgb(150 132 180 / 0.14), transparent 70%);
-  filter: blur(14px);
+  /* Sin filter: blur(). Los degradados radiales ya son suaves y el desenfoque
+     habia que recalcularlo en cada fotograma porque la animacion escalaba.
+     Ahora solo se traslada, que es trabajo de GPU y no repinta nada. */
+  will-change: transform;
   animation: fog-drift 64s ease-in-out infinite alternate;
 }
 
 @keyframes fog-drift {
-  from { transform: translate3d(-6%, 0, 0) scaleX(1); }
-  to   { transform: translate3d(6%, 0, 0) scaleX(1.12); }
+  from { transform: translate3d(-6%, 0, 0); }
+  to   { transform: translate3d(6%, 0, 0); }
 }
 
 /* ATMOSFERA GLOBAL
@@ -96,15 +99,18 @@
     radial-gradient(128% 98% at 50% 30%, transparent 38%, rgb(2 3 8 / 0.46) 76%, rgb(1 1 4 / 0.88) 100%);
 }
 
-/* Grano de pelicula. Muy bajo a proposito: por encima de 0.09 empieza a
-   ensuciar el texto. */
+/* Grano de pelicula.
+   OJO: nada de mix-blend-mode aqui. Una mezcla a pantalla completa obliga al
+   navegador a releer y recomponer todo lo pintado debajo en cada fotograma, y
+   era la causa principal de los tirones al hacer scroll. El PNG ya lleva el
+   alfa incorporado (motas claras y oscuras sobre fondo transparente), asi que
+   compone de forma normal y sale igual de barato que una imagen cualquiera. */
 .atmos::after {
   content: "";
   position: absolute;
   inset: 0;
   background: url("../img/ui/grain.png") repeat;
-  mix-blend-mode: overlay;
-  opacity: 0.055;
+  opacity: 0.22;
 }
 
 /*--------------------------------------------------------------
