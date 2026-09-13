@@ -5,7 +5,7 @@
 *
 * Indice:
 *   1. Variables propias
-*   2. Fondo: catedral, niebla y velo
+*   2. Fondo: catedral, niebla y atmosfera global
 *   3. Tipografia y texto
 *   4. Portada (hero)
 *   5. Catalogo: cuadros colgados del muro
@@ -30,7 +30,7 @@
 }
 
 /*--------------------------------------------------------------
-# 2. Fondo: catedral, niebla y velo
+# 2. Fondo: catedral, niebla y atmosfera global
 --------------------------------------------------------------*/
 .backdrop,
 .backdrop > * {
@@ -79,20 +79,30 @@
   to   { transform: translate3d(6%, 0, 0) scaleX(1.12); }
 }
 
-/* Vineta: cierra los bordes de la escena hacia el negro. */
-.backdrop__veil {
-  background-image:
-    radial-gradient(135% 105% at 50% 34%, transparent 46%, rgb(2 3 8 / 0.42) 82%, rgb(1 1 4 / 0.86) 100%);
+/* ATMOSFERA GLOBAL
+   Una sola capa de vineta y grano POR ENCIMA de todo: catedral, muro y cuadros.
+   Es la pieza que hace que las tres cosas parezcan una misma ilustracion y no
+   tres trozos pegados. Antes la vineta vivia dentro de .backdrop y el muro del
+   catalogo quedaba por delante de ella, sin atmosfera: por eso cantaba.
+   No la muevas por debajo del contenido. */
+.atmos {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background:
+    radial-gradient(128% 98% at 50% 30%, transparent 38%, rgb(2 3 8 / 0.46) 76%, rgb(1 1 4 / 0.88) 100%);
 }
 
-/* Damasco heredado, ahora solo como grano: si sube de opacidad se come la catedral. */
-.backdrop__veil::after {
+/* Grano de pelicula. Muy bajo a proposito: por encima de 0.09 empieza a
+   ensuciar el texto. */
+.atmos::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--background-image) center / 520px auto repeat;
+  background: url("../img/ui/grain.png") repeat;
   mix-blend-mode: overlay;
-  opacity: 0.07;
+  opacity: 0.055;
 }
 
 /*--------------------------------------------------------------
@@ -255,8 +265,12 @@ h1, h2, h3, h4, h5, h6 {
   top: 0;
   left: 0;
   right: 0;
-  height: 150px;
-  background: url("../img/ui/parapet.svg") repeat-x center top / auto 150px;
+  height: 176px;
+  /* La bruma detras del pretil funde su canto con el cielo: sin ella el muro
+     empieza de golpe y se ve el corte. */
+  background:
+    url("../img/ui/parapet.svg") repeat-x center top / auto 176px,
+    radial-gradient(140% 110% at 50% 100%, rgb(92 104 158 / 0.14), transparent 72%);
   z-index: -1;
 }
 
@@ -266,23 +280,25 @@ h1, h2, h3, h4, h5, h6 {
 .gallery::after {
   content: "";
   position: absolute;
-  top: 108px;
+  top: 124px;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #0a0d18;
+  background-color: #070a13;
   background-image:
-    radial-gradient(130% 55% at 50% 0%, rgb(96 108 164 / 0.07), transparent 62%),
-    url("../img/ui/ashlar.svg"),
-    linear-gradient(180deg, #111524 0, #0d101c 16%, #090b14 52%, #06070d 82%, #05060b 100%);
-  background-size: auto, 260px 130px, auto;
+    /* La luna esta arriba a la derecha en la fachada: el muro tiene que
+       recibir la luz desde el mismo sitio o se lee como otra escena. */
+    radial-gradient(96% 74% at 84% -4%, rgb(104 120 186 / 0.15), transparent 64%),
+    url("../img/ui/wall.svg"),
+    linear-gradient(180deg, #0c1020 0, #090c17 32%, #06080f 72%, #04050b 100%);
+  background-size: auto, 760px 300px, auto;
   background-repeat: no-repeat, repeat, no-repeat;
   z-index: -1;
 }
 
 /* El titulo de seccion cae ya sobre el sillar, por debajo del pretil */
 .gallery .section-title {
-  padding-top: 152px;
+  padding-top: 178px;
 }
 
 /* Aire entre cuadro y cuadro: la piedra tiene que respirar alrededor */
@@ -437,19 +453,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 767px) {
-  /* Sillares mas pequenos: a 260px de ancho en un movil pareceria hormigon */
+  /* Sillares mas pequenos: a 760px de ancho en un movil se veria un solo bloque */
   .gallery::after {
-    top: 69px;
-    background-size: auto, 150px 75px, auto;
+    top: 79px;
+    background-size: auto, 430px 170px, auto;
   }
 
   .gallery::before {
-    height: 96px;
-    background-size: auto 96px;
+    height: 112px;
+    background-size: auto 112px;
   }
 
   .gallery .section-title {
-    padding-top: 104px;
+    padding-top: 118px;
   }
 
   .gallery .row {
