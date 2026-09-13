@@ -1,0 +1,44 @@
+<!--
+  Pretil del muro: se repite en horizontal a lo ancho de la seccion del catalogo.
+  Marca donde acaba la piedra y empieza el cielo, que es lo que hace que el
+  catalogo se lea como un muro y no como un fondo.
+  De 0 a 108 hay calados (se ve el cielo detras). De 108 abajo, cornisa maciza.
+  Los pinaculos de los extremos van partidos a proposito: al repetirse la
+  baldosa se unen y salen completos.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 150" width="260" height="150">
+  <defs>
+    <linearGradient id="p-stone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"   stop-color="#11152a"/>
+      <stop offset=".5"  stop-color="#0a0d1a"/>
+      <stop offset="1"   stop-color="#070910"/>
+    </linearGradient>
+  </defs>
+
+  <g fill="url(#p-stone)">
+    <!-- arqueria calada del antepecho -->
+    <path fill-rule="evenodd" d="M0,70H260V108H0Z
+      M16,108L16,104A26,26 0 0 1 29,81.5A26,26 0 0 1 42,104L42,108Z
+      M50,108L50,104A26,26 0 0 1 63,81.5A26,26 0 0 1 76,104L76,108Z
+      M84,108L84,104A26,26 0 0 1 97,81.5A26,26 0 0 1 110,104L110,108Z
+      M176,108L176,104A26,26 0 0 1 189,81.5A26,26 0 0 1 202,104L202,108Z
+      M210,108L210,104A26,26 0 0 1 223,81.5A26,26 0 0 1 236,104L236,108Z"/>
+
+    <!-- pinaculo central -->
+    <rect x="116" y="58" width="28" height="14"/>
+    <path d="M117,60Q124,32 130,2Q136,32 143,60Z"/>
+
+    <!-- pinaculos partidos de los extremos -->
+    <rect x="0" y="58" width="13" height="14"/>
+    <path d="M0,60Q4,38 7,18L7,60Z"/>
+    <rect x="247" y="58" width="13" height="14"/>
+    <path d="M260,60Q256,38 253,18L253,60Z"/>
+
+    <!-- cornisa -->
+    <rect x="0" y="108" width="260" height="42"/>
+  </g>
+
+  <!-- filos que coge la luna -->
+  <rect x="0" y="108" width="260" height="2.5" fill="#2b3454" opacity=".5"/>
+  <rect x="0" y="70"  width="260" height="1.5" fill="#2b3454" opacity=".3"/>
+</svg>

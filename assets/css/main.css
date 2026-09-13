@@ -12,21 +12,22 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Cardo",  sans-serif;
-  --nav-font: "Inter",  sans-serif;
+  --default-font: "Cardo", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Cinzel", "Cardo", serif;
+  --nav-font: "Cinzel", "Inter", sans-serif;
+  --display-font: "UnifrakturMaguntia", "Cinzel Decorative", serif; /* Letra gotica, solo para el nombre de la marca */
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-color: #000000; /* Background color for the entire website, including individual sections */
-  --default-color: #fafafa; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #ffffff; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #27a776; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #1a1a1a; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
-  --background-image: url("../img/background/bg2.jpg"); /* Imagen de fondo global del sitio. Cambia a bg2.jpg o bg3.jpg para probar otras */
-  --background-overlay: rgb(0 0 0 / 0.44); /* Capa negra sobre la imagen. Sube el valor (0 a 1) para oscurecer mas */
+  --background-color: #04050a; /* Negro azulado: la noche de fondo del sitio entero */
+  --default-color: #cfc6b4; /* Hueso viejo, no blanco puro: el blanco puro rompe el ambiente */
+  --heading-color: #ece3d0; /* Marfil para titulos */
+  --accent-color: #a8202c; /* Carmesi: el color de marca. Botones, enlaces, subrayados */
+  --surface-color: #0b0d15; /* Piedra oscura para tarjetas y cajas */
+  --contrast-color: #f4eee2; /* Texto sobre fondos de acento */
+  --background-image: url("../img/background/bg2.jpg"); /* Damasco: ahora se usa como textura sutil, no como fondo principal */
+  --background-overlay: rgb(0 0 0 / 0.44);
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
@@ -68,20 +69,8 @@ body {
   font-family: var(--default-font);
 }
 
-/* Imagen de fondo global con una capa negra semitransparente encima para oscurecerla.
-   Va en un elemento fijo (en lugar de background-attachment: fixed) para que funcione
-   tambien en iOS/Safari y no salte al hacer scroll. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: linear-gradient(var(--background-overlay), var(--background-overlay)), var(--background-image);
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  pointer-events: none;
-  z-index: -1;
-}
+/* El fondo del sitio (catedral + cielo + niebla) vive ahora en gothic.css,
+   repartido en las capas de .backdrop. */
 
 a {
   color: var(--accent-color);

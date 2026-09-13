@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - PhotoFolio Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <title>Mortiz &middot; Gothic Homemaking</title>
+  <meta name="description" content="Objetos para habitar la penumbra. Catalogo de decoracion gotica para el hogar.">
+  <meta name="keywords" content="decoracion gotica, hogar gotico, velas, candelabros, vitrales">
+  <meta name="theme-color" content="#04050a">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -15,11 +16,10 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Cardo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"> -->
   <link href="assets/vendor/fontawesome/css/all.min.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
@@ -27,10 +27,19 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <!-- Capa gotica: se carga despues para poder reescribir la plantilla -->
+  <link href="assets/css/gothic.css" rel="stylesheet">
 
 </head>
 
 <body class="index-page">
+
+  <!-- Fondo del sitio: la catedral, la niebla y el velo que oscurece -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="backdrop__sky"></div>
+    <div class="backdrop__fog"></div>
+    <div class="backdrop__veil"></div>
+  </div>
 
   <main class="main">
 
@@ -39,8 +48,25 @@
 
       <div class="container">
         <div class="row justify-content-center">
-          <div class="text-center" data-aos="fade-up" data-aos-delay="100">
-            <h2>Mortiz Gothic Homemaking</h2>
+          <div class="col-lg-9" data-aos="fade-up" data-aos-delay="100">
+
+            <p class="hero__eyebrow">Gothic Homemaking</p>
+            <h1 class="hero__title">Mortiz</h1>
+            <p class="hero__sub">Objetos para habitar la penumbra</p>
+
+            <svg class="ornament" viewBox="0 0 230 24" fill="none" aria-hidden="true">
+              <path d="M0 12h86M144 12h86" stroke="currentColor" stroke-width="1"/>
+              <path d="M115 2v20M107 12h16M115 2l-5 5M115 2l5 5M115 22l-5-5M115 22l5-5"
+                    stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="96" cy="12" r="2.2" fill="currentColor"/>
+              <circle cx="134" cy="12" r="2.2" fill="currentColor"/>
+            </svg>
+
+            <p class="hero__lead">
+              Piezas para vestir la casa cuando cae la noche: luz de vela, hierro,
+              terciopelo y vidrio de color.
+            </p>
+
           </div>
         </div>
       </div>
@@ -50,92 +76,169 @@
     <!-- Gallery Section -->
     <section id="gallery" class="gallery section">
 
-      <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>El Catalogo</h2>
+          <p class="subtitle">Ocho colecciones colgadas del muro</p>
+        </div>
+      </div>
 
-        <div class="row gy-4 justify-content-center">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
 
-          <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="gallery-item h-100">
-              <img src="assets/img/gallery/gallery-1.jpg" class="img-fluid" alt="">
-              <div class="gallery-links d-flex align-items-center justify-content-center">
-                <a href="assets/img/gallery/gallery-1.jpg" title="Gallery 1" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
-                <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+            <article class="art">
+              <div class="art__hanger" aria-hidden="true"></div>
+              <div class="art__frame">
+                <div class="art__canvas">
+                  <img src="assets/img/gallery/gallery-1.jpg" alt="Velas y Candelabros">
+                  <div class="gallery-links d-flex align-items-center justify-content-center">
+                    <a href="assets/img/gallery/gallery-1.jpg" title="Velas y Candelabros" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
+                    <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="art__plaque">
+                <h3 class="art__name">Velas y Candelabros</h3>
+                <span class="art__count">24 piezas</span>
+              </div>
+            </article>
           </div><!-- End Gallery Item -->
 
-          <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="gallery-item h-100">
-              <img src="assets/img/gallery/gallery-2.jpg" class="img-fluid" alt="">
-              <div class="gallery-links d-flex align-items-center justify-content-center">
-                <a href="assets/img/gallery/gallery-2.jpg" title="Gallery 2" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
-                <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+            <article class="art">
+              <div class="art__hanger" aria-hidden="true"></div>
+              <div class="art__frame">
+                <div class="art__canvas">
+                  <img src="assets/img/gallery/gallery-2.jpg" alt="Espejos y Marcos">
+                  <div class="gallery-links d-flex align-items-center justify-content-center">
+                    <a href="assets/img/gallery/gallery-2.jpg" title="Espejos y Marcos" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
+                    <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="art__plaque">
+                <h3 class="art__name">Espejos y Marcos</h3>
+                <span class="art__count">18 piezas</span>
+              </div>
+            </article>
           </div><!-- End Gallery Item -->
 
-          <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="gallery-item h-100">
-              <img src="assets/img/gallery/gallery-3.jpg" class="img-fluid" alt="">
-              <div class="gallery-links d-flex align-items-center justify-content-center">
-                <a href="assets/img/gallery/gallery-3.jpg" title="Gallery 3" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
-                <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+            <article class="art">
+              <div class="art__hanger" aria-hidden="true"></div>
+              <div class="art__frame">
+                <div class="art__canvas">
+                  <img src="assets/img/gallery/gallery-3.jpg" alt="Textiles y Cortinajes">
+                  <div class="gallery-links d-flex align-items-center justify-content-center">
+                    <a href="assets/img/gallery/gallery-3.jpg" title="Textiles y Cortinajes" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
+                    <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="art__plaque">
+                <h3 class="art__name">Textiles y Cortinajes</h3>
+                <span class="art__count">31 piezas</span>
+              </div>
+            </article>
           </div><!-- End Gallery Item -->
 
-          <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="gallery-item h-100">
-              <img src="assets/img/gallery/gallery-4.jpg" class="img-fluid" alt="">
-              <div class="gallery-links d-flex align-items-center justify-content-center">
-                <a href="assets/img/gallery/gallery-4.jpg" title="Gallery 4" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
-                <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+            <article class="art">
+              <div class="art__hanger" aria-hidden="true"></div>
+              <div class="art__frame">
+                <div class="art__canvas">
+                  <img src="assets/img/gallery/gallery-4.jpg" alt="Cristaleria">
+                  <div class="gallery-links d-flex align-items-center justify-content-center">
+                    <a href="assets/img/gallery/gallery-4.jpg" title="Cristaleria" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
+                    <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="art__plaque">
+                <h3 class="art__name">Cristaleria</h3>
+                <span class="art__count">12 piezas</span>
+              </div>
+            </article>
           </div><!-- End Gallery Item -->
 
-          <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="gallery-item h-100">
-              <img src="assets/img/gallery/gallery-5.jpg" class="img-fluid" alt="">
-              <div class="gallery-links d-flex align-items-center justify-content-center">
-                <a href="assets/img/gallery/gallery-5.jpg" title="Gallery 5" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
-                <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+            <article class="art">
+              <div class="art__hanger" aria-hidden="true"></div>
+              <div class="art__frame">
+                <div class="art__canvas">
+                  <img src="assets/img/gallery/gallery-5.jpg" alt="Arte y Cuadros">
+                  <div class="gallery-links d-flex align-items-center justify-content-center">
+                    <a href="assets/img/gallery/gallery-5.jpg" title="Arte y Cuadros" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
+                    <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="art__plaque">
+                <h3 class="art__name">Arte y Cuadros</h3>
+                <span class="art__count">27 piezas</span>
+              </div>
+            </article>
           </div><!-- End Gallery Item -->
 
-          <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="gallery-item h-100">
-              <img src="assets/img/gallery/gallery-6.jpg" class="img-fluid" alt="">
-              <div class="gallery-links d-flex align-items-center justify-content-center">
-                <a href="assets/img/gallery/gallery-6.jpg" title="Gallery 6" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
-                <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+            <article class="art">
+              <div class="art__hanger" aria-hidden="true"></div>
+              <div class="art__frame">
+                <div class="art__canvas">
+                  <img src="assets/img/gallery/gallery-6.jpg" alt="Mobiliario">
+                  <div class="gallery-links d-flex align-items-center justify-content-center">
+                    <a href="assets/img/gallery/gallery-6.jpg" title="Mobiliario" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
+                    <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="art__plaque">
+                <h3 class="art__name">Mobiliario</h3>
+                <span class="art__count">9 piezas</span>
+              </div>
+            </article>
           </div><!-- End Gallery Item -->
 
-          <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="gallery-item h-100">
-              <img src="assets/img/gallery/gallery-7.jpg" class="img-fluid" alt="">
-              <div class="gallery-links d-flex align-items-center justify-content-center">
-                <a href="assets/img/gallery/gallery-7.jpg" title="Gallery 7" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
-                <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+            <article class="art">
+              <div class="art__hanger" aria-hidden="true"></div>
+              <div class="art__frame">
+                <div class="art__canvas">
+                  <img src="assets/img/gallery/gallery-7.jpg" alt="Altares y Rituales">
+                  <div class="gallery-links d-flex align-items-center justify-content-center">
+                    <a href="assets/img/gallery/gallery-7.jpg" title="Altares y Rituales" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
+                    <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="art__plaque">
+                <h3 class="art__name">Altares y Rituales</h3>
+                <span class="art__count">16 piezas</span>
+              </div>
+            </article>
           </div><!-- End Gallery Item -->
 
-          <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="gallery-item h-100">
-              <img src="assets/img/gallery/gallery-8-2.jpg" class="img-fluid" alt="">
-              <div class="gallery-links d-flex align-items-center justify-content-center">
-                <a href="assets/img/gallery/gallery-8-2.jpg" title="Gallery 8" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
-                <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+            <article class="art">
+              <div class="art__hanger" aria-hidden="true"></div>
+              <div class="art__frame">
+                <div class="art__canvas">
+                  <img src="assets/img/gallery/gallery-8-2.jpg" alt="Jardin Nocturno">
+                  <div class="gallery-links d-flex align-items-center justify-content-center">
+                    <a href="assets/img/gallery/gallery-8-2.jpg" title="Jardin Nocturno" class="glightbox preview-link"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></a>
+                    <a href="gallery-single.html" class="details-link"><i class="fa-solid fa-link"></i></a>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="art__plaque">
+                <h3 class="art__name">Jardin Nocturno</h3>
+                <span class="art__count">21 piezas</span>
+              </div>
+            </article>
           </div><!-- End Gallery Item -->
 
         </div>
-
       </div>
 
     </section><!-- /Gallery Section -->
@@ -146,18 +249,18 @@
 
     <div class="container">
       <div class="social-links d-flex justify-content-center">
-
-        <a href=""><i class="fa-brands fa-whatsapp"></i></a>
-        <a href=""><i class="fa-brands fa-facebook-f"></i></a>
-        <a href=""><i class="fa-brands fa-instagram"></i></a>
-        <a href=""><i class="fa-brands fa-tiktok"></i></a>
+        <a href="" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
       </div>
+      <p class="credits">Mortiz &middot; Gothic Homemaking</p>
     </div>
 
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="fa-solid fa-arrow-up"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center" aria-label="Volver arriba"><i class="fa-solid fa-arrow-up"></i></a>
 
   <!-- Preloader -->
   <div id="preloader">
