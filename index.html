@@ -36,7 +36,12 @@
 
   <!-- Fondo del sitio: la catedral, la niebla y el velo que oscurece -->
   <div class="backdrop" aria-hidden="true">
-    <div class="backdrop__sky"></div>
+    <!-- Va en <object> y no en background-image: como imagen de fondo el
+         navegador no ejecuta el CSS interno del SVG y el cielo queda quieto. -->
+    <div class="backdrop__sky">
+      <object type="image/svg+xml" data="assets/img/background/cathedral.svg"
+              tabindex="-1" aria-hidden="true"></object>
+    </div>
     <div class="backdrop__fog"></div>
   </div>
 
