@@ -30,7 +30,7 @@
   <!-- Capa gotica: se carga despues para poder reescribir la plantilla -->
   <link href="assets/css/gothic.css" rel="stylesheet">
 
-</head>
+<style>#preloader{display:none!important}[data-aos]{opacity:1!important;transform:none!important}#hero{display:none!important}</style><style>.art__caption{outline:1px solid red}.art__name{outline:1px solid lime}.art__canvas{outline:1px solid cyan}</style></head>
 
 <body class="index-page">
 
@@ -248,10 +248,7 @@
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center" aria-label="Volver arriba"><i class="fa-solid fa-arrow-up"></i></a>
 
-  <!-- Preloader -->
-  <div id="preloader">
-    <div class="line"></div>
-  </div>
+  
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -263,6 +260,35 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
-</body>
+<script>
+window.addEventListener('load', function(){
+  console.log('fonts ready?', document.fonts.status);
+  console.log('cinzel loaded?', document.fonts.check('12px Cinzel'));
+  var arts = document.querySelectorAll('.art');
+  var target = arts[1]; // Espejos y Marcos
+  var canvas = target.querySelector('.art__canvas');
+  var caption = target.querySelector('.art__caption');
+  var name = target.querySelector('.art__name');
+  var col = target.closest('[class*="col-"]');
+  var frame = target.querySelector('.art__frame');
+  function r(el){ var b = el.getBoundingClientRect(); return b.width.toFixed(1)+'x'+b.height.toFixed(1)+' @ '+b.left.toFixed(1); }
+  var out = document.createElement('pre');
+  out.style.cssText = 'position:fixed;top:0;left:0;background:#fff;color:#000;font-size:14px;z-index:99999;padding:8px;margin:0;';
+  out.textContent =
+    'col: ' + r(col) + '\n' +
+    'frame: ' + r(frame) + '\n' +
+    'canvas: ' + r(canvas) + '\n' +
+    'caption: ' + r(caption) + '\n' +
+    'name: ' + r(name) + '\n' +
+    'name scrollWidth: ' + name.scrollWidth + '\n' +
+    'name text: ' + JSON.stringify(name.textContent) + '\n' +
+    'name computed whiteSpace: ' + getComputedStyle(name).whiteSpace + '\n' +
+    'name computed width: ' + getComputedStyle(name).width + '\n' +
+    'fonts status: ' + document.fonts.status + '\n' +
+    'cinzel 600 16px loaded: ' + document.fonts.check('600 16px Cinzel') + '\n' +
+    'name font-family used: ' + getComputedStyle(name).fontFamily;
+  document.body.appendChild(out);
+});
+</script></body>
 
 </html>

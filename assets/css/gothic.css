@@ -334,17 +334,30 @@ h1, h2, h3, h4, h5, h6 {
   --bs-gutter-y: 5rem;
 }
 
-/* Cada categoria es un cuadro colgado */
+/* Cada categoria es un cuadro colgado. Toda la tarjeta es UN enlace: no hace
+   falta pasar el cursor para descubrir que lleva a algo, y en pantalla tactil
+   no hay cursor. El boton "Ver coleccion" de la placa queda siempre visible
+   por eso mismo: para quien no maneja mucho de webs, tiene que notarse a
+   simple vista donde hay que tocar. */
 .art {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-/* Cordon y clavo. El ancho en % hace que los cordones caigan siempre a la
-   misma proporcion del marco, sea cual sea su tamano. */
-/* Cadena y clavo.
+/* Anillo dorado al navegar con teclado (Tab): sin esto un enlace que ocupa
+   toda la tarjeta no se distingue de las demas al enfocarlo. */
+.art:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 6px;
+  border-radius: 2px;
+}
+
+/* Cadena y clavo. El ancho en % hace que caiga siempre a la misma proporcion
+   del marco, sea cual sea su tamano.
    Dos cosas que NO se pueden tocar sin que vuelva a parecer que flota:
    - margin-bottom negativo: la cadena tiene que solaparse con el marco. Si
      acaba justo donde empieza el marco, queda colgando en el aire.
@@ -371,7 +384,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   width: 100%;
   padding: 15.53%;
-  transition: transform 0.5s ease;
+  transition: transform 0.4s ease;
 }
 
 .art__frame::before {
@@ -392,20 +405,8 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: inset 0 0 50px rgb(0 0 0 / 0.7);
 }
 
-/* Penumbra en las esquinas del lienzo, como un oleo viejo */
-.art__canvas::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: radial-gradient(74% 64% at 50% 40%, transparent 28%, rgb(4 3 8 / 0.8) 100%);
-  transition: background 0.6s ease;
-  pointer-events: none;
-}
-
 /* Patina uniforme para las ocho, como un barniz viejo. No es un color por
-   categoria: es el mismo tratamiento en todas.
-   Si las quieres a color limpio, borra este filter y el del hover. */
+   categoria: es el mismo tratamiento en todas. */
 .art__canvas img {
   display: block;
   width: 100%;
@@ -413,21 +414,19 @@ h1, h2, h3, h4, h5, h6 {
   object-fit: cover;
   filter: brightness(0.46) contrast(1.3) saturate(0.46) sepia(0.24);
   transform: scale(1.01);
-  transition: filter 0.6s ease, transform 0.8s ease;
+  transition: filter 0.4s ease, transform 0.6s ease;
 }
 
-/* Al acercarse, el cuadro se levanta del muro y se le va el barniz */
+/* El cursor encima solo da un pequeno acuse de recibo (se levanta un poco y
+   se aclara el barniz); ya NO es de donde depende saber que se puede hacer
+   clic, asi que no hace falta que sea llamativo ni lento. */
 .art:hover .art__frame {
   transform: translateY(-5px);
 }
 
 .art:hover .art__canvas img {
-  filter: brightness(0.84) contrast(1.12) saturate(0.78) sepia(0.08);
+  filter: brightness(0.88) contrast(1.1) saturate(0.62) sepia(0.06);
   transform: scale(1.05);
-}
-
-.art:hover .art__canvas::after {
-  background: radial-gradient(82% 72% at 50% 42%, transparent 42%, rgb(4 3 8 / 0.58) 100%);
 }
 
 /* Cartel de madera colgado de dos cadenas verticales del canto del marco.
@@ -441,7 +440,7 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
   display: inline-block;
   margin-top: 38px;
-  padding: 11px 24px 12px;
+  padding: 12px 26px 13px;
   text-align: center;
   background:
     /* canto superior en luz y canto inferior en sombra: da el grueso del tablon */
@@ -451,6 +450,17 @@ h1, h2, h3, h4, h5, h6 {
     linear-gradient(90deg, rgb(0 0 0 / 0.5), transparent 14%, transparent 86%, rgb(0 0 0 / 0.5)),
     url("../img/ui/wood.svg") repeat;
   background-size: auto, auto, 240px 64px;
+  transition: box-shadow 0.3s ease;
+}
+
+/* El cartel es AHORA el boton entero (ya no lleva nombre ni conteo, eso se
+   fue al lienzo), asi que el aviso de "esto se puede tocar" es un resplandor
+   dorado alrededor de la propia madera, en vez de una caja metida dentro. */
+.art:hover .art__plaque,
+.art:focus-visible .art__plaque {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--gold), transparent 35%),
+    0 0 18px rgb(199 154 78 / 0.3);
 }
 
 /* Las dos cadenas. Van en % del ancho, asi acompañan al cartel mida lo que mida. */
@@ -471,47 +481,69 @@ h1, h2, h3, h4, h5, h6 {
 .art__plaque::before { left: 20%; }
 .art__plaque::after  { right: 20%; }
 
-/* Letra incisa y dorada, como una inscripcion grabada y luego dorada a fuego */
+/* El rotulo ahora vive DENTRO del cuadro, como el titulo grabado en la propia
+   pintura. El degradado es lo que lo hace legible: solo oscurece la franja
+   baja de la foto, no la foto entera (eso ya lo probamos y se veia casi
+   negra). En fotos que ya son oscuras por abajo casi no se nota; en fotos
+   claras es lo que salva la lectura del texto. */
+.art__caption {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 46px 14px 16px;
+  text-align: center;
+  background: linear-gradient(180deg,
+    transparent 0%, rgb(3 3 8 / 0.14) 32%,
+    rgb(3 3 8 / 0.58) 62%, rgb(3 3 8 / 0.86) 100%);
+  pointer-events: none;
+}
+
 .art__name {
   margin: 0;
   font-family: var(--heading-font);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0.2em;
-  text-indent: 0.2em;
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--gold), #e8dcbc 42%);
-  text-shadow: 0 1px 2px rgb(0 0 0 / 0.85), 0 0 6px rgb(0 0 0 / 0.5);
+  color: var(--heading-color);
+  text-shadow: 0 2px 6px rgb(0 0 0 / 0.9), 0 0 20px rgb(0 0 0 / 0.65);
 }
 
 .art__count {
   display: block;
-  margin-top: 4px;
+  margin-top: 5px;
   font-family: var(--default-font);
   font-size: 12px;
   font-style: italic;
-  color: color-mix(in srgb, #d8c9a6, transparent 46%);
-  text-shadow: 0 1px 2px rgb(0 0 0 / 0.8);
+  color: color-mix(in srgb, var(--default-color), transparent 24%);
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.85);
 }
 
-/* Los dos iconos heredados de la plantilla, ahora sobre el lienzo */
-.gallery .art .gallery-links {
-  z-index: 2;
-  background: rgb(4 4 10 / 0.62);
+/* El texto del boton. El cartel de madera de alrededor ya hace de boton (con
+   su propio resplandor al pasar el cursor); esto es solo la etiqueta. */
+.art__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--nav-font);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--gold), #f0e2bb 20%);
 }
 
-.gallery .art .gallery-links .preview-link,
-.gallery .art .gallery-links .details-link {
-  color: color-mix(in srgb, var(--candle), transparent 25%);
+.art__cta-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
 }
 
-.gallery .art .gallery-links .preview-link:hover,
-.gallery .art .gallery-links .details-link:hover {
-  color: var(--gold);
-}
-
-.gallery .art:hover .gallery-links {
-  opacity: 1;
+.art:hover .art__cta-arrow,
+.art:focus-visible .art__cta-arrow {
+  transform: translateX(3px);
 }
 
 @media (max-width: 767px) {
@@ -568,14 +600,24 @@ h1, h2, h3, h4, h5, h6 {
     background-size: 11px 52px;
   }
 
+  .art__caption {
+    padding: 30px 8px 10px;
+  }
+
   .art__name {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-indent: 0.12em;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-indent: 0.1em;
   }
 
   .art__count {
-    font-size: 11px;
+    font-size: 10px;
+    margin-top: 3px;
+  }
+
+  .art__cta {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
   }
 }
 
