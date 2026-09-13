@@ -110,9 +110,28 @@
 /*--------------------------------------------------------------
 # 3. Tipografia y texto
 --------------------------------------------------------------*/
+/* El pie se pega al fondo de la ventana cuando la pagina es corta. Antes habia
+   una guarda de 100vh bajo el pie, pero eso ALARGA el documento y deja un vacio
+   muerto al final. Esto no anade altura. */
 body {
   letter-spacing: 0.01em;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
+/* .backdrop y .atmos van fijos: no cuentan en este reparto.
+   El sobrante tiene que absorberlo la seccion del catalogo, no .main: si crece
+   .main queda un hueco vacio entre el muro y el pie por el que asoma la
+   catedral del fondo. */
+body > .main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+body > .main > #gallery { flex: 1 0 auto; }
+body > .footer { flex-shrink: 0; }
 
 /* El fondo es fijo y el contenido scrollea por encima, asi que cualquier texto
    puede acabar sobre un vitral encendido. Esta sombra le garantiza el contraste. */
@@ -501,6 +520,17 @@ h1, h2, h3, h4, h5, h6 {
     background-size: auto 112px;
   }
 
+  .footer {
+    padding-top: 118px;
+    background-size: 100% 220px, auto, auto, 430px 221px, auto;
+    background-position: bottom, bottom, bottom, left 86px, top;
+  }
+
+  .footer::before {
+    height: 86px;
+    background-size: auto 86px;
+  }
+
   .gallery .section-title {
     padding-top: 118px;
   }
@@ -546,49 +576,79 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # 6. Pie de pagina
 --------------------------------------------------------------*/
-/* El pie sigue siendo el mismo muro: este color continua el sillar del catalogo */
+/* El pie es el pie del muro: zocalo, suelo y niebla a ras.
+   Antes el sillar se cortaba en seco contra una franja negra. */
 .footer {
-  padding: 30px 0 64px;
-  background: #05060b;
+  position: relative;
+  padding: 132px 0 70px;
+  background-color: #070a12;
+  /* El sillar sigue bajando por detras del contenido: el pie es el pie del
+     muro, no una franja aparte. Solo mas abajo aparece el suelo. */
+  background-image:
+    /* el suelo, ganandole al muro segun baja */
+    linear-gradient(180deg, transparent 0, rgb(3 4 9 / 0.72) 44%, #030409 100%),
+    /* niebla a ras */
+    radial-gradient(62% 72% at 20% 100%, rgb(122 108 156 / 0.13), transparent 72%),
+    radial-gradient(56% 68% at 76% 100%, rgb(104 92 138 / 0.10), transparent 74%),
+    url("../img/ui/wall.svg"),
+    linear-gradient(180deg, #0a0e1a 0, #070a12 100%);
+  background-size: 100% 260px, auto, auto, 760px 390px, auto;
+  background-position: bottom, bottom, bottom, left 118px, top;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, no-repeat;
 }
 
+/* Zocalo: la moldura vuela y cierra el muro por abajo */
 .footer::before {
   content: "";
-  display: block;
-  width: min(520px, 76%);
-  height: 1px;
-  margin: 0 auto 46px;
-  background: linear-gradient(90deg, transparent, var(--gold-soft) 50%, transparent);
-  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 118px;
+  background: url("../img/ui/plinth.svg") repeat-x center top / auto 118px;
+}
+
+/* La marca cierra la pagina igual que la abre el hero */
+.footer__mark {
+  margin: 0;
+  text-align: center;
+  font-family: var(--display-font);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1;
+  color: color-mix(in srgb, var(--heading-color), transparent 28%);
+  text-shadow: 0 2px 10px rgb(0 0 0 / 0.9), 0 0 30px rgb(199 154 78 / 0.12);
 }
 
 .footer .social-links {
-  gap: 16px;
-  margin-top: 0;
+  gap: 34px;
+  margin-top: 30px;
 }
 
-/* Medallones de piedra con filete dorado, en vez de los iconos gigantes */
+/* Iconos desnudos, sin caja. Sobre piedra cualquier recuadro se lee como
+   pegatina; el icono suelto no. */
 .footer .social-links a {
-  width: 56px;
-  height: 56px;
+  width: auto;
+  height: auto;
   margin: 0;
-  font-size: 20px;
-  border-radius: 50%;
-  color: color-mix(in srgb, var(--default-color), transparent 34%);
-  background: linear-gradient(180deg, var(--stone-edge), var(--stone));
-  border: 1px solid color-mix(in srgb, var(--gold), transparent 70%);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 6px 18px rgb(0 0 0 / 0.65);
+  padding: 0;
+  font-size: 19px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: color-mix(in srgb, var(--default-color), transparent 56%);
+  transition: color 0.35s ease, filter 0.35s ease;
 }
 
 .footer .social-links a:hover {
-  color: var(--gold);
-  border-color: var(--gold);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 0 22px rgb(201 162 39 / 0.3);
-  transform: translateY(-2px);
+  color: var(--candle);
+  filter: drop-shadow(0 0 10px rgb(199 154 78 / 0.5));
+  transform: none;
 }
 
 .footer .credits {
-  margin-top: 32px;
+  margin-top: 14px;
   font-family: var(--nav-font);
   font-size: 11px;
   letter-spacing: 0.24em;
