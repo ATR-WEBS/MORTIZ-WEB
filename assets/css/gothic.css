@@ -291,7 +291,7 @@ h1, h2, h3, h4, h5, h6 {
     radial-gradient(96% 74% at 84% -4%, rgb(104 120 186 / 0.15), transparent 64%),
     url("../img/ui/wall.svg"),
     linear-gradient(180deg, #0c1020 0, #090c17 32%, #06080f 72%, #04050b 100%);
-  background-size: auto, 760px 300px, auto;
+  background-size: auto, 760px 390px, auto;
   background-repeat: no-repeat, repeat, no-repeat;
   z-index: -1;
 }
@@ -317,11 +317,19 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Cordon y clavo. El ancho en % hace que los cordones caigan siempre a la
    misma proporcion del marco, sea cual sea su tamano. */
+/* Cadena, clavo y argollas.
+   Dos cosas que NO se pueden tocar sin que vuelva a parecer que flota:
+   - margin-bottom negativo + z-index: las argollas tienen que montar SOBRE el
+     canto del marco. Si la cadena acaba donde empieza el marco, queda en el aire.
+   - background-size con ancho auto: estirada, los eslabones salen ovalados. */
 .art__hanger {
+  position: relative;
+  z-index: 3;
   width: 100%;
-  height: 34px;
+  height: 60px;
+  margin-bottom: -25px;
   background: url("../img/ui/picture-hanger.svg") no-repeat center bottom;
-  background-size: 46% 34px;
+  background-size: auto 60px;
 }
 
 /* Marco tallado negro. Todo el marco (perfil de la moldura + las ocho cartelas)
@@ -456,7 +464,7 @@ h1, h2, h3, h4, h5, h6 {
   /* Sillares mas pequenos: a 760px de ancho en un movil se veria un solo bloque */
   .gallery::after {
     top: 79px;
-    background-size: auto, 430px 170px, auto;
+    background-size: auto, 430px 221px, auto;
   }
 
   .gallery::before {
@@ -478,8 +486,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .art__hanger {
-    height: 22px;
-    background-size: 46% 22px;
+    height: 42px;
+    margin-bottom: -17px;
+    background-size: auto 42px;
   }
 
   .art__plaque {
