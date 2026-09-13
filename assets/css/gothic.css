@@ -207,8 +207,8 @@ h1, h2, h3, h4, h5, h6 {
 .hero__sub {
   margin: 10px 0 0;
   font-family: var(--heading-font);
-  font-size: clamp(13px, 2.1vw, 19px);
-  font-weight: 500;
+  font-size: clamp(20px, 2.5vw, 24px);
+  font-weight: 900;
   letter-spacing: 0.52em;
   text-indent: 0.52em; /* compensa el espaciado del ultimo caracter para que quede centrado */
   text-transform: uppercase;

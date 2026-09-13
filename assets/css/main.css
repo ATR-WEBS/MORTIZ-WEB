@@ -26,7 +26,6 @@
   --accent-color: #a8202c; /* Carmesi: el color de marca. Botones, enlaces, subrayados */
   --surface-color: #0b0d15; /* Piedra oscura para tarjetas y cajas */
   --contrast-color: #f4eee2; /* Texto sobre fondos de acento */
-  --background-image: url("../img/background/bg2.jpg"); /* Damasco: ahora se usa como textura sutil, no como fondo principal */
   --background-overlay: rgb(0 0 0 / 0.44);
 }
 
