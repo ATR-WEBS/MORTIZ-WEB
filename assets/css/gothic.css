@@ -10,8 +10,9 @@
 *   4. Portada (hero)
 *   5. Catalogo: cuadros colgados del muro
 *   6. Pie de pagina
-*   7. Detalles: scrollbar, seleccion, boton de subir, precarga
-*   8. Movimiento reducido
+*   7. Detalles: scrollbar, seleccion, boton de subir
+*   8. Intro: el ciclo de dia a noche
+*   9. Movimiento reducido
 */
 
 /*--------------------------------------------------------------
@@ -195,7 +196,7 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 .hero {
   min-height: 82vh;
-  padding: 132px 0 72px 0;
+  padding: 172px 0 72px 0;
   text-align: center;
 }
 
@@ -252,10 +253,57 @@ h1, h2, h3, h4, h5, h6 {
   color: color-mix(in srgb, var(--default-color), transparent 38%);
 }
 
+/* Aviso de que hay mas pagina debajo. Primera version (solo un filete de 1px
+   y un chevron de 12px) se perdia contra la fachada: nada tan fino compite
+   con una catedral entera de fondo. Esta pesa mas: la etiqueta le da un
+   segundo apoyo ademas del icono, el resplandor (drop-shadow, no text-shadow:
+   asi alcanza tambien a la linea y al icono) la separa del fondo, y el
+   bamboleo es mas amplio para que se note aunque no se este mirando fijo. */
+.hero__scroll {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 56px;
+  color: var(--candle);
+  text-decoration: none;
+  filter: drop-shadow(0 0 10px rgb(199 154 78 / 0.55));
+  animation: hero-scroll-bob 2.2s ease-in-out infinite;
+}
+
+.hero__scroll:hover,
+.hero__scroll:focus-visible {
+  color: var(--gold);
+}
+
+.hero__scroll-line {
+  width: 2px;
+  height: 44px;
+  background: linear-gradient(180deg, transparent, currentColor 55%, currentColor);
+}
+
+.hero__scroll-label {
+  font-family: var(--nav-font);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-transform: uppercase;
+}
+
+.hero__scroll i {
+  font-size: 17px;
+}
+
+@keyframes hero-scroll-bob {
+  0%, 100% { transform: translateY(0);    opacity: 0.82; }
+  50%      { transform: translateY(14px); opacity: 1; }
+}
+
 @media (max-width: 768px) {
   .hero {
     min-height: 74vh;
-    padding-top: 96px;
+    padding-top: 128px;
   }
 
   .hero__sub {
@@ -425,12 +473,14 @@ h1, h2, h3, h4, h5, h6 {
 /* Cartel de madera colgado de dos cadenas verticales del canto del marco.
    La madera se REPITE en vez de estirarse, asi el cartel mide lo que pida el
    texto sin que la veta se deforme.
-   z-index 1, por debajo del 2 de la talla: el tramo de cadena que se solapa con
-   el marco queda POR DETRAS, como enganchado al dorso. El cartel no se tapa
-   porque cuelga por debajo del marco y no llega a solaparse con el. */
+   SIN z-index aqui a proposito: con uno puesto, el cartel abre su propio
+   contexto de apilado y se lleva las cadenas (su ::before/::after) adentro
+   como un solo bloque. Ese bloque, por ir despues del marco en el HTML,
+   terminaba pintandose ENCIMA de la talla en vez de detras. Dejandolo en
+   z-index:auto, el cartel entra en el mismo nivel que las demas piezas de
+   .art y las cadenas (mas abajo, z-index negativo) sí quedan por detras. */
 .art__plaque {
   position: relative;
-  z-index: 2;
   display: inline-block;
   margin-top: 38px;
   padding: 12px 26px 13px;
@@ -457,13 +507,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Las dos cadenas. Van en % del ancho, asi acompañan al cartel mida lo que mida.
-   Quedan por detras del cartel para que parezcan parte del agarre y no una
-   capa puesta encima de la madera. */
+   z-index NEGATIVO (no 0): asi quedan por detras tanto de la talla del marco
+   como de la propia madera del cartel, y no encima de ninguna de las dos. Con
+   .art__plaque sin z-index propio, este valor se compara directo contra el
+   resto de .art (isolation: isolate mas arriba es lo que hace de techo). */
 .art__plaque::before,
 .art__plaque::after {
   content: "";
   position: absolute;
-  z-index: 0;
+  z-index: -1;
   bottom: calc(100% - 5px);
   width: 14px;
   height: 68px;
@@ -704,51 +756,257 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 html {
-  scrollbar-color: var(--gold-soft) #06070d;
+  /* Sin dorado ni amarillo: mismos grises de piedra que el resto del sitio */
+  scrollbar-color: var(--stone-edge) var(--stone);
   scrollbar-width: thin;
+  /* El hueco se reserva siempre: el intro bloquea el scroll y sin esto la
+     pagina pegaria un salto lateral al abrirse. */
+  scrollbar-gutter: stable;
 }
 
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: #06070d; }
+/* Track: mismo muro de piedra del resto del sitio, no un negro plano */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, var(--stone), #06070d);
+  box-shadow: inset 0 0 6px rgb(0 0 0 / 0.6);
+}
+
+/* Thumb: piedra clara sobre piedra oscura, sin color de acento */
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--gold-soft), #3c3010);
-  border: 2px solid #06070d;
+  background: var(--stone-edge);
+  border: 1px solid var(--stone);
   border-radius: 10px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+::-webkit-scrollbar-thumb:hover {
+  background: #2c3350;
+}
 
-/* Boton de subir: arco de piedra con filo dorado */
-.scroll-top {
-  right: 22px;
-  width: 46px;
-  height: 52px;
-  border-radius: 23px 23px 4px 4px;
+/* Boton de contacto: un medallon de bronce viejo, no un circulo con marco
+   dorado. La diferencia con el intento anterior (un aro brillante con una
+   argolla dibujada) esta en el material: relieve tallado por dentro (sombras
+   inset, no un borde plano), grano de metal envejecido (el mismo grain.png
+   de .atmos), y una cadena DE VERDAD (el chain-v.svg del cartel, no una
+   argolla de CSS) de la que cuelga. La idea es que se lea como un objeto
+   colgado en la escena, no como un icono con decoracion alrededor.
+   Antes esto era el arco del boton de "subir" (main.js lo mostraba solo tras
+   pasar 100px de scroll, via .scroll-top.active). Un boton de contacto no
+   puede jugar a las escondidas: tiene que verse desde el primer segundo. Por
+   eso ya no usa la clase .scroll-top (main.js ya no la toca) y trae su propio
+   position/z-index en vez de heredarlo de main.css. */
+.contact-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 99999;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(120% 120% at 35% 22%, #4a3a1c, #1c1408 78%);
+  border: 1px solid color-mix(in srgb, var(--gold-soft), transparent 15%);
+  box-shadow:
+    inset 2px 2px 4px rgb(0 0 0 / 0.65),
+    inset -1px -1px 2px rgb(255 220 150 / 0.18),
+    0 8px 18px rgb(0 0 0 / 0.7);
+  transition: box-shadow 0.3s ease;
+}
+
+/* La repisa de piedra clavada arriba, con su argolla forjada: sin esto el
+   medallon colgaba de la nada, como si flotara. Es un elemento real (no un
+   pseudo) porque .contact-fab ya usa sus dos unicos pseudo-elementos en la
+   cadena y en el grano. */
+.contact-fab__hook {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 16px;
   background: linear-gradient(180deg, var(--stone-edge), var(--stone));
-  border: 1px solid color-mix(in srgb, var(--gold), transparent 62%);
-  box-shadow: 0 8px 22px rgb(0 0 0 / 0.7);
+  border: 1px solid color-mix(in srgb, var(--gold-soft), transparent 30%);
+  border-radius: 4px 4px 3px 3px;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 0.6);
+  pointer-events: none;
 }
 
-.scroll-top i {
-  font-size: 18px;
-  color: var(--gold);
+.contact-fab__hook::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--gold-soft), transparent 10%);
+  background: var(--stone);
 }
 
-.scroll-top:hover {
-  background: linear-gradient(180deg, #262c42, #10131e);
-  border-color: var(--gold);
+/* La cadena: un tramo corto del mismo SVG que cuelga el cartel del catalogo,
+   no una argolla dibujada. Arranca 10px por encima del canto del medallon
+   para meterse detras de la argolla (::before pinta antes que .contact-fab__
+   hook en el orden de pintado, asi que el soporte queda siempre por delante
+   y no se ve la union). */
+.contact-fab::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 20px;
+  background: url("../img/ui/chain-v.svg") no-repeat center top;
+  background-size: 14px 68px;
+  filter: sepia(0.4) saturate(0.6) brightness(0.85);
+  opacity: 0.9;
+  pointer-events: none;
 }
 
-.scroll-top.active { bottom: 22px; }
+/* Textura de metal envejecido. mix-blend-mode aqui SI es barato (a diferencia
+   del de .atmos, que advierte lo contrario): esto no anima y mide 56x56px, no
+   la pantalla entera. */
+.contact-fab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: url("../img/ui/grain.png") repeat;
+  background-size: 120px;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
 
-/* Precarga: la linea que se abre pasa de blanca a dorada */
-#preloader .line:before { background-color: var(--gold); }
+.contact-fab i {
+  position: relative;
+  z-index: 1;
+  font-size: 24px;
+  color: #cbaa5c;
+  text-shadow:
+    0 1px 0 rgb(255 235 180 / 0.25),
+    0 -1px 1px rgb(0 0 0 / 0.6);
+}
+
+.contact-fab:hover,
+.contact-fab:focus-visible {
+  box-shadow:
+    inset 2px 2px 4px rgb(0 0 0 / 0.65),
+    inset -1px -1px 2px rgb(255 220 150 / 0.28),
+    0 8px 18px rgb(0 0 0 / 0.7),
+    0 0 16px color-mix(in srgb, var(--candle), transparent 65%);
+}
 
 /*--------------------------------------------------------------
-# 8. Movimiento reducido
+# 8. Intro: el ciclo de dia a noche
+--------------------------------------------------------------*/
+/* Los estados los mueve assets/js/gothic.js. Sin JS no se anade ninguna clase
+   y nada de esto llega a aplicarse: la pagina se ve entera desde el principio. */
+
+/* Nada de scroll mientras el contenido esta fuera de sitio */
+html.is-loading,
+html.is-revealing {
+  overflow: hidden;
+}
+
+/* El contenido espera escondido. Sin clicks: esta ahi, solo que no se ve.
+   El bloque entero ya NO se desplaza: mover main y footer de una pieza hacia
+   que todo entrase como un ladrillo. Ahora solo se funde, y el movimiento lo
+   pone cada elemento por su cuenta (mas abajo). */
+html.is-loading body > .main,
+html.is-loading body > .footer {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body > .main,
+body > .footer {
+  transition: opacity 800ms ease;
+}
+
+/* LA ENTRADA DE LA PORTADA
+   El nombre, el subtitulo y el aviso de scroll suben uno detras de otro. Curva
+   con frenada larga al final (el ultimo tramo casi no se mueve): es lo que
+   hace que se sienta suave y no un deslizamiento mecanico. */
+html.is-loading .hero__title,
+html.is-loading .hero__sub,
+html.is-loading .hero__scroll {
+  opacity: 0;
+  transform: translate3d(0, 46px, 0);
+}
+
+.hero__title,
+.hero__sub,
+.hero__scroll {
+  transition:
+    opacity 1000ms cubic-bezier(0.22, 0.68, 0.24, 1),
+    transform 1250ms cubic-bezier(0.16, 0.8, 0.24, 1);
+}
+
+.hero__title  { transition-delay: 80ms; }
+.hero__sub    { transition-delay: 320ms; }
+.hero__scroll { transition-delay: 520ms; }
+
+/* El parpadeo de vela del titulo (@keyframes candle) y el bamboleo del aviso
+   de scroll (@keyframes hero-scroll-bob) tienen que esperar a que termine la
+   entrada. Una animacion MANDA sobre una transicion de la misma propiedad, y
+   las dos tocan opacity: si corren desde el principio se comen el fundido y
+   aparecen de golpe. */
+html.is-loading .hero__title,
+html.is-revealing .hero__title,
+html.is-loading .hero__scroll,
+html.is-revealing .hero__scroll {
+  animation: none;
+}
+
+/* EL CATALOGO
+   Queda por debajo del pliegue, asi que su entrada no la dispara el intro sino
+   AOS al llegar con el scroll. Aqui solo se le corrige el gesto: 100px de
+   recorrido era un salto, y la curva de la plantilla (ease-in-out) arranca
+   lenta y llega de golpe, justo al reves de lo que se quiere.
+   El doble [data-aos] es para ganarle en especificidad a aos.css sin !important. */
+[data-aos="fade-up"][data-aos] {
+  transform: translate3d(0, 54px, 0);
+  transition-timing-function: cubic-bezier(0.16, 0.8, 0.24, 1);
+}
+
+/* La catedral aparece sola sobre el negro. El anochecer en si va dentro de
+   cathedral.svg; aqui solo acompanan las dos capas que el SVG no controla. */
+html.is-loading .backdrop {
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+
+html.is-intro .backdrop { opacity: 1; }
+
+/* El velo negro que hace legible el texto no puede estar puesto de dia: se
+   echa encima al mismo ritmo que se pone el sol. */
+html.is-intro .backdrop__sky::after {
+  animation: veil-fall 2s ease-in forwards;
+}
+
+/* Y la vineta con el grano se cierra igual: de dia la escena se ve limpia. */
+html.is-intro .atmos {
+  animation: atmos-fall 2s ease-in forwards;
+}
+
+@keyframes veil-fall {
+  0%   { opacity: 0; }
+  55%  { opacity: 0.35; }
+  100% { opacity: 1; }
+}
+
+@keyframes atmos-fall {
+  0%   { opacity: 0.25; }
+  55%  { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/*--------------------------------------------------------------
+# 9. Movimiento reducido
 --------------------------------------------------------------*/
 @media (prefers-reduced-motion: reduce) {
   .backdrop__fog,
-  .hero__title {
+  .hero__title,
+  .hero__scroll {
     animation: none;
   }
 
@@ -764,5 +1022,17 @@ html {
 
   .art:hover .art__canvas img {
     transform: scale(1.01);
+  }
+
+  /* El anochecer se queda: son fundidos y un astro cruzando despacio, no el
+     tipo de movimiento que marea. Lo que se quita son las subidas: el nombre,
+     el subtitulo, el aviso de scroll y los cuadros del catalogo entran con un
+     fundido y ya, sin desplazarse. Ojo: aqui se anula el TRANSFORM, no la
+     entrada entera, o el contenido apareceria de golpe. */
+  html.is-loading .hero__title,
+  html.is-loading .hero__sub,
+  html.is-loading .hero__scroll,
+  [data-aos="fade-up"][data-aos] {
+    transform: none;
   }
 }

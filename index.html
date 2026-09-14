@@ -30,6 +30,12 @@
   <!-- Capa gotica: se carga despues para poder reescribir la plantilla -->
   <link href="assets/css/gothic.css" rel="stylesheet">
 
+  <!-- El intro (el ciclo de dia a noche de la catedral) empieza aqui, antes del
+       primer pintado, para que el contenido no llegue a asomar. Si el visitante
+       no tiene JS la clase nunca se pone y la pagina se ve entera desde el
+       primer fotograma. -->
+  <script>document.documentElement.classList.add('is-loading');</script>
+
 </head>
 
 <body class="index-page">
@@ -57,6 +63,12 @@
             <h1 class="hero__title">Mortiz</h1>
             <p class="hero__sub">Gothic Homemaking - Oficial</p>
 
+            <a href="#gallery" class="hero__scroll" aria-label="Bajar al catálogo">
+              <span class="hero__scroll-line" aria-hidden="true"></span>
+              <span class="hero__scroll-label">Catálogo</span>
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </a>
+
           </div>
         </div>
       </div>
@@ -73,10 +85,12 @@
         </div>
       </div>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <!-- La entrada la lleva cada cuadro, no el contenedor: asi el catalogo
+           se descuelga en cascada en vez de aparecer todo a la vez. -->
+      <div class="container">
         <div class="row justify-content-center">
 
-          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3" data-aos="fade-up">
             <a class="art" href="gallery-single.html" aria-label="Ver colección: Velas y Candelabros">
               <div class="art__hanger" aria-hidden="true"></div>
               <div class="art__frame">
@@ -94,7 +108,7 @@
             </a>
           </div><!-- End Gallery Item -->
 
-          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3" data-aos="fade-up" data-aos-delay="50">
             <a class="art" href="gallery-single.html" aria-label="Ver colección: Espejos y Marcos">
               <div class="art__hanger" aria-hidden="true"></div>
               <div class="art__frame">
@@ -112,7 +126,7 @@
             </a>
           </div><!-- End Gallery Item -->
 
-          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3" data-aos="fade-up" data-aos-delay="100">
             <a class="art" href="gallery-single.html" aria-label="Ver colección: Textiles y Cortinajes">
               <div class="art__hanger" aria-hidden="true"></div>
               <div class="art__frame">
@@ -130,7 +144,7 @@
             </a>
           </div><!-- End Gallery Item -->
 
-          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3" data-aos="fade-up" data-aos-delay="150">
             <a class="art" href="gallery-single.html" aria-label="Ver colección: Cristaleria">
               <div class="art__hanger" aria-hidden="true"></div>
               <div class="art__frame">
@@ -148,7 +162,7 @@
             </a>
           </div><!-- End Gallery Item -->
 
-          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3" data-aos="fade-up" data-aos-delay="200">
             <a class="art" href="gallery-single.html" aria-label="Ver colección: Arte y Cuadros">
               <div class="art__hanger" aria-hidden="true"></div>
               <div class="art__frame">
@@ -166,7 +180,7 @@
             </a>
           </div><!-- End Gallery Item -->
 
-          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3" data-aos="fade-up" data-aos-delay="250">
             <a class="art" href="gallery-single.html" aria-label="Ver colección: Mobiliario">
               <div class="art__hanger" aria-hidden="true"></div>
               <div class="art__frame">
@@ -184,7 +198,7 @@
             </a>
           </div><!-- End Gallery Item -->
 
-          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3" data-aos="fade-up" data-aos-delay="300">
             <a class="art" href="gallery-single.html" aria-label="Ver colección: Altares y Rituales">
               <div class="art__hanger" aria-hidden="true"></div>
               <div class="art__frame">
@@ -202,7 +216,7 @@
             </a>
           </div><!-- End Gallery Item -->
 
-          <div class="col-6 col-md-6 col-lg-4 col-xl-3">
+          <div class="col-6 col-md-6 col-lg-4 col-xl-3" data-aos="fade-up" data-aos-delay="350">
             <a class="art" href="gallery-single.html" aria-label="Ver colección: Jardin Nocturno">
               <div class="art__hanger" aria-hidden="true"></div>
               <div class="art__frame">
@@ -245,13 +259,10 @@
   <!-- Atmosfera: vineta y grano sobre toda la escena -->
   <div class="atmos" aria-hidden="true"></div>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center" aria-label="Volver arriba"><i class="fa-solid fa-arrow-up"></i></a>
+  <!-- Contacto: WhatsApp. OJO: cambiar el href por el enlace real
+       (https://wa.me/<numero>) antes de publicar. -->
+  <a href="#" target="_blank" rel="noopener" class="contact-fab d-flex align-items-center justify-content-center" aria-label="Escribinos por WhatsApp"><span class="contact-fab__hook" aria-hidden="true"></span><i class="fa-brands fa-whatsapp"></i></a>
 
-  <!-- Preloader -->
-  <div id="preloader">
-    <div class="line"></div>
-  </div>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -262,6 +273,8 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <!-- Capa gotica: el intro. Despues de main.js para poder refrescar AOS. -->
+  <script src="assets/js/gothic.js"></script>
 
 </body>
 
