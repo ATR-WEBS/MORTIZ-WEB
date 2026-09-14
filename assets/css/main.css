@@ -771,8 +771,8 @@ section,
 }
 
 .hero p {
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
   margin-bottom: 30px;
+  font-weight: 700;
   font-size: 18px;
 }
 

@@ -159,7 +159,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--default-font);
   text-transform: uppercase;
   letter-spacing: 1.1px;
-  font-style: italic;
   font-size: 46px;
   font-weight: 900;
   color: var(--heading-color);
@@ -175,7 +174,6 @@ h1, h2, h3, h4, h5, h6 {
 .section-title .subtitle {
   font-family: var(--default-font);
   font-size: 22px;
-  font-style: italic;
   letter-spacing: 0.04em;
   color: color-mix(in srgb, var(--default-color), transparent 42%);
   text-transform: none;
@@ -503,12 +501,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .art__name {
   margin: 0;
-  font-family: var(--heading-font);
+  font-family: var(--default-font);
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 0.14em;
   text-indent: 0.14em;
   text-transform: uppercase;
+  font-style: italic;
   color: var(--heading-color);
   text-shadow: 0 2px 6px rgb(0 0 0 / 0.9), 0 0 20px rgb(0 0 0 / 0.65);
 }
