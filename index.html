@@ -15,7 +15,11 @@
     <link rel="preload" href="assets/fonts/cinzel.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/styles.css">
 
-    <script>document.documentElement.classList.add("js", "intro", "dusk");</script>
+    <script>(function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        if (!/[?&]c=/.test(location.search)) d.classList.add("intro", "dusk");
+    })();</script>
 </head>
 
 <body>
@@ -596,6 +600,8 @@
     <section id="gallery" class="gallery section">
         <div class="container">
 
+            <div class="view view--catalogos">
+
             <div class="section-title reveal">
                 <h2>Catalogo</h2>
                 <p>Ocho colecciones colgadas del muro</p>
@@ -603,7 +609,7 @@
 
             <ul class="catalog">
                 <li class="reveal">
-                    <a class="art" href="gallery-single.html">
+                    <a class="art" href="?c=velas-y-candelabros" data-catalogo="velas-y-candelabros">
                         <div class="art__hanger" aria-hidden="true"></div>
                         <div class="art__frame">
                             <div class="art__canvas">
@@ -623,7 +629,7 @@
                     </a>
                 </li>
                 <li class="reveal">
-                    <a class="art" href="gallery-single.html">
+                    <a class="art" href="?c=espejos-y-marcos" data-catalogo="espejos-y-marcos">
                         <div class="art__hanger" aria-hidden="true"></div>
                         <div class="art__frame">
                             <div class="art__canvas">
@@ -643,7 +649,7 @@
                     </a>
                 </li>
                 <li class="reveal">
-                    <a class="art" href="gallery-single.html">
+                    <a class="art" href="?c=textiles-y-cortinajes" data-catalogo="textiles-y-cortinajes">
                         <div class="art__hanger" aria-hidden="true"></div>
                         <div class="art__frame">
                             <div class="art__canvas">
@@ -663,7 +669,7 @@
                     </a>
                 </li>
                 <li class="reveal">
-                    <a class="art" href="gallery-single.html">
+                    <a class="art" href="?c=cristaleria" data-catalogo="cristaleria">
                         <div class="art__hanger" aria-hidden="true"></div>
                         <div class="art__frame">
                             <div class="art__canvas">
@@ -683,7 +689,7 @@
                     </a>
                 </li>
                 <li class="reveal">
-                    <a class="art" href="gallery-single.html">
+                    <a class="art" href="?c=arte-y-cuadros" data-catalogo="arte-y-cuadros">
                         <div class="art__hanger" aria-hidden="true"></div>
                         <div class="art__frame">
                             <div class="art__canvas">
@@ -703,7 +709,7 @@
                     </a>
                 </li>
                 <li class="reveal">
-                    <a class="art" href="gallery-single.html">
+                    <a class="art" href="?c=mobiliario" data-catalogo="mobiliario">
                         <div class="art__hanger" aria-hidden="true"></div>
                         <div class="art__frame">
                             <div class="art__canvas">
@@ -723,7 +729,7 @@
                     </a>
                 </li>
                 <li class="reveal">
-                    <a class="art" href="gallery-single.html">
+                    <a class="art" href="?c=altares-y-rituales" data-catalogo="altares-y-rituales">
                         <div class="art__hanger" aria-hidden="true"></div>
                         <div class="art__frame">
                             <div class="art__canvas">
@@ -743,7 +749,7 @@
                     </a>
                 </li>
                 <li class="reveal">
-                    <a class="art" href="gallery-single.html">
+                    <a class="art" href="?c=jardin-nocturno" data-catalogo="jardin-nocturno">
                         <div class="art__hanger" aria-hidden="true"></div>
                         <div class="art__frame">
                             <div class="art__canvas">
@@ -763,6 +769,28 @@
                     </a>
                 </li>
             </ul>
+
+            </div>
+
+            <div class="view view--productos">
+                <div class="collection">
+
+                    <div class="collection__head">
+                        <button class="collection__back" type="button">
+                            <svg class="collection__back-icon" aria-hidden="true">
+                                <use href="#icon-chevron"/>
+                            </svg>
+                            <span>Cat&aacute;logo</span>
+                        </button>
+                        <h2 class="collection__title" tabindex="-1"></h2>
+                        <p class="collection__legend"></p>
+                        <span class="collection__count"></span>
+                    </div>
+
+                    <div class="pieces"></div>
+
+                </div>
+            </div>
 
         </div>
     </section>
@@ -808,6 +836,7 @@
     </svg>
 </a>
 
+<script src="assets/js/catalogos.js" defer></script>
 <script src="assets/js/app.js" defer></script>
 
 </body>

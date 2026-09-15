@@ -790,6 +790,312 @@ svg {
     }
 }
 
+.view--productos {
+    display: none;
+}
+
+html[data-vista="productos"] .view--catalogos {
+    display: none;
+}
+
+html[data-vista="productos"] .view--productos {
+    display: block;
+}
+
+html[data-vista="productos"] #hero {
+    display: none;
+}
+
+html[data-transito] .contact-fab {
+    opacity: 0;
+    transition: opacity 260ms ease;
+}
+
+.collection {
+    max-width: 1040px;
+    margin-inline: auto;
+}
+
+.collection__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 148px 0 54px;
+    text-align: center;
+}
+
+.collection__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    align-self: flex-start;
+    margin-bottom: 44px;
+    padding: 10px 20px 10px 14px;
+    border: 1px solid rgb(91 66 49 / 0.34);
+    background: linear-gradient(180deg, rgb(160 122 74 / 0.20) 0 2px, transparent 2px),
+    linear-gradient(180deg, rgb(69 47 35 / 0.58), rgb(26 18 15 / 0.82)),
+    url("../img/ui/wood.svg") repeat;
+    background-size: auto, auto, 240px 64px;
+    color: #e8d0a4;
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgb(0 0 0 / 0.85);
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.collection__back:hover,
+.collection__back:focus-visible {
+    color: #fbe7bd;
+    border-color: rgb(140 104 66 / 0.6);
+    box-shadow: 0 0 18px rgb(199 154 78 / 0.18), inset 0 0 22px rgb(199 154 78 / 0.08);
+    outline: none;
+}
+
+.collection__back-icon {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transform: rotate(90deg);
+}
+
+.collection__title {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: clamp(30px, 5.2vw, 46px);
+    font-weight: 900;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgb(2 2 6 / 0.9), 0 0 14px rgb(2 2 6 / 0.8);
+}
+
+.collection__title:focus {
+    outline: none;
+}
+
+.collection__legend {
+    margin-top: 10px;
+    font-size: 19px;
+    font-style: italic;
+    color: color-mix(in srgb, var(--ink), transparent 42%);
+    text-shadow: 0 1px 2px rgb(2 2 6 / 0.9), 0 0 14px rgb(2 2 6 / 0.8);
+}
+
+.collection__count {
+    margin-top: 22px;
+    padding-top: 18px;
+    font-family: var(--font-head);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-indent: 0.32em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--candle), transparent 38%);
+    border-top: 1px solid rgb(120 92 58 / 0.24);
+}
+
+.pieces {
+    column-count: 2;
+    column-gap: 1.1rem;
+}
+
+@media (min-width: 768px) {
+    .pieces {
+        column-count: 3;
+        column-gap: 2.2rem;
+    }
+}
+
+.piece {
+    break-inside: avoid;
+    margin: 0 0 1.7rem;
+    animation: piece-in 640ms cubic-bezier(0.16, 0.8, 0.24, 1) backwards;
+    animation-delay: var(--piece-delay, 0ms);
+}
+
+@media (min-width: 768px) {
+    .piece {
+        margin-bottom: 2.6rem;
+    }
+}
+
+@keyframes piece-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, var(--piece-rise, 30px), 0);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.piece__link {
+    display: block;
+    isolation: isolate;
+}
+
+.piece__link:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 6px;
+}
+
+.piece__frame {
+    position: relative;
+    padding: 9px;
+    background: linear-gradient(180deg, rgb(160 122 74 / 0.22) 0 1px, transparent 1px,
+    transparent calc(100% - 2px), rgb(0 0 0 / 0.42) calc(100% - 2px)),
+    linear-gradient(90deg, rgb(0 0 0 / 0.42), transparent 12%, transparent 88%, rgb(0 0 0 / 0.42)),
+    linear-gradient(180deg, rgb(62 44 31 / 0.82), rgb(22 16 14 / 0.9)),
+    url("../img/ui/wood.svg") repeat;
+    background-size: auto, auto, auto, 240px 64px;
+    box-shadow: 0 0 0 1px rgb(120 92 58 / 0.2),
+    0 16px 30px rgb(0 0 0 / 0.55),
+    0 2px 0 rgb(0 0 0 / 0.45);
+    transition: transform 0.45s cubic-bezier(0.16, 0.8, 0.24, 1), box-shadow 0.45s ease;
+}
+
+.piece__canvas {
+    position: relative;
+    overflow: hidden;
+    background: #04040a;
+    box-shadow: inset 0 0 36px rgb(0 0 0 / 0.72);
+}
+
+.piece__canvas img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.44) contrast(1.32) saturate(0.44) sepia(0.26);
+    transform: scale(1.02);
+    transition: filter 0.45s ease, transform 0.7s ease;
+}
+
+.piece__link:hover .piece__frame,
+.piece__link:focus-visible .piece__frame {
+    transform: translateY(-6px);
+    box-shadow: 0 0 0 1px rgb(150 116 72 / 0.3),
+    0 22px 40px rgb(0 0 0 / 0.62),
+    0 0 26px rgb(199 154 78 / 0.14);
+}
+
+.piece__link:hover .piece__canvas img,
+.piece__link:focus-visible .piece__canvas img {
+    filter: brightness(0.9) contrast(1.1) saturate(0.62) sepia(0.06);
+    transform: scale(1.06);
+}
+
+.piece__label {
+    padding: 14px 8px 0;
+    text-align: center;
+}
+
+.piece__name {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-indent: 0.12em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 6px rgb(0 0 0 / 0.9);
+}
+
+.piece__price {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--font-head);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: color-mix(in srgb, var(--candle), transparent 22%);
+    text-shadow: 0 1px 3px rgb(0 0 0 / 0.85);
+}
+
+.zoomer {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.zoomer__veil {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background: radial-gradient(120% 100% at 50% 50%, #0a0c17, var(--background) 66%);
+}
+
+html[data-transito] {
+    overflow: clip;
+}
+
+html[data-transito] .main {
+    pointer-events: none;
+    backface-visibility: hidden;
+}
+
+html[data-transito] .art__frame {
+    transform: none;
+    transition: none;
+}
+
+html[data-transito] .art__canvas img {
+    transition: none;
+}
+
+html[data-transito] .footer {
+    opacity: 0;
+    transition: opacity 240ms ease;
+}
+
+@media (max-width: 767px) {
+    .collection__head {
+        padding: 96px 0 40px;
+    }
+
+    .collection__back {
+        margin-bottom: 34px;
+        padding: 8px 14px 8px 10px;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+    }
+
+    .collection__legend {
+        font-size: 15px;
+    }
+
+    .collection__count {
+        margin-top: 18px;
+        padding-top: 14px;
+        font-size: 10px;
+    }
+
+    .piece__frame {
+        padding: 6px;
+    }
+
+    .piece__label {
+        padding-top: 11px;
+    }
+
+    .piece__name {
+        font-size: 11px;
+        letter-spacing: 0.09em;
+        text-indent: 0.09em;
+    }
+
+    .piece__price {
+        font-size: 11px;
+    }
+}
+
 .footer {
     position: relative;
     flex-shrink: 0;
@@ -1307,5 +1613,20 @@ html.dusk .sky__glass {
     html.intro .hero__scroll,
     .js .reveal {
         transform: none;
+    }
+
+    .piece {
+        --piece-rise: 0px;
+        animation-duration: 420ms;
+    }
+
+    .piece__link:hover .piece__frame,
+    .piece__link:focus-visible .piece__frame {
+        transform: none;
+    }
+
+    .piece__link:hover .piece__canvas img,
+    .piece__link:focus-visible .piece__canvas img {
+        transform: scale(1.02);
     }
 }
