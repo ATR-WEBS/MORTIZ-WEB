@@ -63,6 +63,7 @@
         const img = node("img");
         img.src = `assets/img/catalogo/${product.img}-320w.webp`;
         img.srcset = `assets/img/catalogo/${product.img}-320w.webp 320w,` +
+            ` assets/img/catalogo/${product.img}-480w.webp 480w,` +
             ` assets/img/catalogo/${product.img}-640w.webp 640w`;
         img.sizes = SIZES;
         img.alt = "";
@@ -108,14 +109,14 @@
     const showCollection = (slug) => {
         current = slug;
         root.dataset.vista = "productos";
-        scrollTo(0, 0);
+        scrollTo({top: 0, behavior: "instant"});
         title.focus({preventScroll: true});
     };
 
     const showCatalog = () => {
         current = null;
         delete root.dataset.vista;
-        scrollTo(0, restoreScroll);
+        scrollTo({top: restoreScroll, behavior: "instant"});
     };
 
     const veilLayer = () => {
