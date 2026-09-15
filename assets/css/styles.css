@@ -928,7 +928,7 @@ html[data-transito] .contact-fab {
 @keyframes piece-in {
     from {
         opacity: 0;
-        transform: translate3d(0, var(--piece-rise, 30px), 0);
+        transform: translate3d(0, var(--piece-rise, 16px), 0);
     }
     to {
         opacity: 1;
@@ -1039,6 +1039,24 @@ html[data-transito] {
 html[data-transito] .main {
     pointer-events: none;
     backface-visibility: hidden;
+}
+
+html[data-transito] .sky__twinkle,
+html[data-transito] .sky__flicker,
+html[data-transito] .sky__glow,
+html[data-transito] .sky__halo,
+html[data-transito] .backdrop__fog,
+html[data-transito] .hero__title,
+html[data-transito] .hero__scroll {
+    animation-play-state: paused;
+}
+
+html[data-transito] #hero {
+    visibility: hidden;
+}
+
+html[data-transito] .art__canvas {
+    box-shadow: none;
 }
 
 html[data-transito] .art__frame {

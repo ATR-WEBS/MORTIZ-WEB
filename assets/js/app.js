@@ -133,33 +133,58 @@
         busy = false;
     };
 
-    const settle = (veil, swap) => {
+    const settle = (veil, swap, riser) => {
         swap();
         requestAnimationFrame(() => requestAnimationFrame(() => {
             const layer = veil.parentElement;
+
+            if (riser) {
+                riser.style.transformOrigin = "50% 42vh";
+                riser.animate(
+                    [{transform: "scale(1.16)"}, {transform: "scale(1)"}],
+                    {duration: 940, easing: "cubic-bezier(.16,.68,.28,1)"}
+                ).finished.then(
+                    () => {
+                        riser.style.transformOrigin = "";
+                    },
+                    () => undefined
+                );
+            }
+
             veil.animate(
                 [{opacity: 1}, {opacity: 0}],
                 {
-                    duration: 720,
-                    easing: "cubic-bezier(.22,.6,.3,1)",
+                    duration: 780,
+                    easing: "cubic-bezier(.24,.62,.3,1)",
                     fill: "forwards"
                 }
             ).finished.then(() => clear(layer), () => clear(layer));
         }));
     };
 
-    const scene = document.querySelector(".main");
+    const scene = document.querySelector(".gallery");
 
     const STEPS = 48;
 
     const glide = (t) => (1 - Math.cos(Math.PI * t)) / 2;
 
+    const RAMP = 0.34;
+
+    const surge = (t) => {
+        const run = t < RAMP
+            ? (t * t) / (2 * RAMP)
+            : RAMP / 2 + (t - RAMP);
+        return run / (1 - RAMP / 2);
+    };
+
+    const BLIND = 0.78;
+
     const DUSK = [
         {opacity: 0, offset: 0},
-        {opacity: 0.09, offset: 0.3},
-        {opacity: 0.28, offset: 0.56},
-        {opacity: 0.64, offset: 0.79},
-        {opacity: 1, offset: 0.95},
+        {opacity: 0.12, offset: 0.22},
+        {opacity: 0.4, offset: 0.45},
+        {opacity: 0.8, offset: 0.63},
+        {opacity: 1, offset: BLIND},
         {opacity: 1, offset: 1}
     ];
 
@@ -174,15 +199,16 @@
         const tx = vw / 2 - fx;
         const ty = vh / 2 - fy;
         const cover = Math.max(vw / inner.width, vh / inner.height);
-        const far = cover * (softMotion.matches ? 1.2 : 1.45);
+        const far = cover * (softMotion.matches ? 0.74 : 0.8);
 
         const frames = [];
         for (let i = 0; i <= STEPS; i++) {
             const t = i / STEPS;
             const aim = glide(Math.min(t / 0.72, 1));
-            const push = Math.pow(far, glide(t));
+            const push = Math.pow(far, surge(t));
             frames.push({
-                transform: `translate(${tx * aim}px, ${ty * aim}px) scale(${push})`,
+                transform: `translate3d(${tx * aim}px, ${ty * aim}px, 0)` +
+                    ` scale3d(${push}, ${push}, 1)`,
                 offset: t
             });
         }
@@ -198,10 +224,25 @@
     const LIT = "brightness(0.98) contrast(1.06) saturate(0.66) sepia(0.04)";
     const DIM = "brightness(0.46) contrast(1.3) saturate(0.46) sepia(0.24)";
 
-    const release = () => {
+    const release = (shot) => {
         scene.style.transform = "";
         scene.style.transformOrigin = "";
         scene.style.willChange = "";
+        scene.style.visibility = "";
+        if (shot.photo) shot.photo.style.filter = "";
+    };
+
+    const lamp = (photo, from, to, ms) => {
+        if (!photo) return null;
+        const beam = photo.animate(
+            [{filter: from}, {filter: to}],
+            {duration: ms, easing: "ease-out", fill: "forwards"}
+        );
+        beam.finished.then(() => {
+            photo.style.filter = to;
+            beam.cancel();
+        }, () => undefined);
+        return beam;
     };
 
     const zoomInto = (frame, slug) => {
@@ -218,18 +259,24 @@
             fill: "forwards"
         });
 
-        const glow = shot.photo && shot.photo.animate(
-            [{filter: DIM}, {filter: LIT}],
-            {duration: ms * 0.55, easing: "ease-out", fill: "forwards"}
-        );
+        const glow = lamp(shot.photo, DIM, LIT, ms * 0.32);
 
         veil.animate(DUSK, {duration: ms, easing: "linear", fill: "forwards"});
 
+        const blind = setTimeout(() => {
+            scene.style.visibility = "hidden";
+        }, ms * BLIND);
+
         setTimeout(() => {
+            clearTimeout(blind);
             travel.cancel();
             if (glow) glow.cancel();
-            release();
-            settle(veil, () => showCollection(slug));
+            release(shot);
+            settle(
+                veil,
+                () => showCollection(slug),
+                document.querySelector(".view--productos")
+            );
         }, ms + 70);
     };
 
@@ -244,7 +291,16 @@
             {duration: shut, easing: "cubic-bezier(.4,0,.6,1)", fill: "forwards"}
         );
 
+        const leaving = document.querySelector(".view--productos");
+        leaving.style.transformOrigin = "50% 42vh";
+        const sink = leaving.animate(
+            [{transform: "scale(1)"}, {transform: "scale(1.16)"}],
+            {duration: shut, easing: "cubic-bezier(.4,0,.75,.6)", fill: "forwards"}
+        );
+
         setTimeout(() => {
+            sink.cancel();
+            leaving.style.transformOrigin = "";
             showCatalog();
             const link = document.querySelector(`.art[data-catalogo="${slug}"]`);
             const frame = link && link.querySelector(".art__frame");
@@ -257,8 +313,13 @@
             scene.style.transformOrigin = shot.origin;
             scene.style.transform = shot.deep;
             scene.style.willChange = "transform";
+            scene.style.visibility = "hidden";
 
             requestAnimationFrame(() => requestAnimationFrame(() => {
+                const wake = setTimeout(() => {
+                    scene.style.visibility = "";
+                }, ms * (1 - BLIND));
+
                 const travel = scene.animate(shot.frames, {
                     duration: ms,
                     easing: "linear",
@@ -266,10 +327,7 @@
                     fill: "forwards"
                 });
 
-                const glow = shot.photo && shot.photo.animate(
-                    [{filter: LIT}, {filter: DIM}],
-                    {duration: ms * 0.6, easing: "ease-in", fill: "forwards"}
-                );
+                const glow = lamp(shot.photo, LIT, DIM, ms * 0.6);
 
                 veil.animate(DUSK, {
                     duration: ms,
@@ -279,9 +337,10 @@
                 });
 
                 setTimeout(() => {
+                    clearTimeout(wake);
                     travel.cancel();
                     if (glow) glow.cancel();
-                    release();
+                    release(shot);
                     clear(veil.parentElement);
                 }, ms + 60);
             }));
