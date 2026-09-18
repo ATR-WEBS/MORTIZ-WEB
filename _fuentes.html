@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mortiz &middot; fuentes goticas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400..900&family=Pirata+One&family=UnifrakturCook:wght@700&family=MedievalSharp&family=Uncial+Antiqua&family=New+Rocker&family=Almendra+Display&family=Cinzel+Decorative:wght@400;700;900&family=Metamorphous&family=IM+Fell+English:ital@0;1&family=Caudex:wght@400;700&display=swap">
+<style>
+@font-face {
+    font-family: "UnifrakturMaguntia";
+    src: url("assets/fonts/unifraktur-mortiz.woff2") format("woff2");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Cinzel";
+    src: url("assets/fonts/cinzel.woff2") format("woff2");
+    font-weight: 400 700;
+}
+@font-face {
+    font-family: "Cardo";
+    src: url("assets/fonts/cardo-700.woff2") format("woff2");
+    font-weight: 700;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 0 0 80px;
+    background-color: #070a13;
+    background-image: radial-gradient(96% 74% at 84% -4%, rgb(104 120 186 / 0.15), transparent 64%),
+        url("assets/img/ui/wall.svg"),
+        linear-gradient(180deg, #0c1020 0, #090c17 32%, #06080f 72%, #04050b 100%);
+    background-size: auto, 760px 390px, auto;
+    background-repeat: no-repeat, repeat, repeat;
+    color: #cfc6b4;
+    font-family: "Cardo", Georgia, serif;
+}
+
+header {
+    padding: 44px 26px 26px;
+    text-align: center;
+}
+
+header p {
+    max-width: 640px;
+    margin: 0 auto;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #8d8471;
+}
+
+.fila {
+    border-top: 1px solid rgb(120 92 58 / 0.16);
+    padding: 26px 26px 34px;
+}
+
+.nombre {
+    font-family: "Cinzel", serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #7e6a45;
+}
+
+.nota {
+    font-size: 13px;
+    color: #6f6757;
+    font-style: italic;
+    margin-left: 10px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-family: "Cardo", serif;
+}
+
+.par {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 16px;
+}
+
+@media (max-width: 860px) {
+    .par { grid-template-columns: 1fr; }
+}
+
+.celda {
+    padding: 26px 14px;
+    text-align: center;
+}
+
+.celda span {
+    display: block;
+    margin-bottom: 14px;
+    font-family: "Cinzel", serif;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #574c3a;
+}
+
+.t {
+    margin: 0;
+    font-size: 42px;
+    line-height: 1.16;
+    font-weight: 700;
+}
+
+.plano .t {
+    color: #cfc6b4;
+    text-shadow: 0 1px 2px rgb(2 2 6 / 0.85);
+}
+
+.tallado .t {
+    color: #454c63;
+    text-shadow:
+        0 -1px 0 rgb(212 202 182 / 0.26),
+        0 2px 3px rgb(0 0 0 / 0.82);
+}
+
+.caps { text-transform: uppercase; letter-spacing: 0.12em; }
+
+.f-grenze .t { font-family: "Grenze Gotisch", serif; font-weight: 700; }
+.f-pirata .t { font-family: "Pirata One", serif; font-weight: 400; }
+.f-unifraktur .t { font-family: "UnifrakturMaguntia", serif; font-weight: 400; }
+.f-cook .t { font-family: "UnifrakturCook", serif; font-weight: 700; }
+.f-medieval .t { font-family: "MedievalSharp", serif; font-weight: 400; }
+.f-uncial .t { font-family: "Uncial Antiqua", serif; font-weight: 400; }
+.f-rocker .t { font-family: "New Rocker", serif; font-weight: 400; }
+.f-almendra .t { font-family: "Almendra Display", serif; font-weight: 400; }
+.f-cinzeld .t { font-family: "Cinzel Decorative", serif; font-weight: 700; }
+.f-metamorphous .t { font-family: "Metamorphous", serif; font-weight: 400; }
+.f-fell .t { font-family: "IM Fell English", serif; font-weight: 400; }
+.f-caudex .t { font-family: "Caudex", serif; font-weight: 700; }
+.f-cinzel .t { font-family: "Cinzel", serif; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header>
+    <p>Izquierda: la letra plana. Derecha: la misma letra con una talla media.
+        Elige primero la <em>fuente</em>; el tallado lo afinamos despues.</p>
+</header>
+
+<div class="fila f-grenze">
+    <div class="nombre">Grenze Gotisch <span class="nota">gotica legible, la mas versatil</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-pirata">
+    <div class="nombre">Pirata One <span class="nota">blackletter condensada, buena en capitular</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-unifraktur">
+    <div class="nombre">UnifrakturMaguntia <span class="nota">la del logo Mortiz, ya esta en el proyecto</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-cook">
+    <div class="nombre">UnifrakturCook <span class="nota">blackletter mas gruesa y oscura</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-medieval">
+    <div class="nombre">MedievalSharp <span class="nota">trazo de pluma, rugosa</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-uncial">
+    <div class="nombre">Uncial Antiqua <span class="nota">uncial de manuscrito</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-rocker">
+    <div class="nombre">New Rocker <span class="nota">gotica decorativa, mas moderna</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-almendra">
+    <div class="nombre">Almendra Display <span class="nota">ornamental, con remates raros</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-cinzeld">
+    <div class="nombre">Cinzel Decorative <span class="nota">capital romana con florones</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-metamorphous">
+    <div class="nombre">Metamorphous <span class="nota">medieval suavizada</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-fell">
+    <div class="nombre">IM Fell English <span class="nota">imprenta antigua, tinta irregular</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-caudex">
+    <div class="nombre">Caudex <span class="nota">sobria, hermana de Cardo</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+<div class="fila f-cinzel">
+    <div class="nombre">Cinzel <span class="nota">la actual del menu, referencia</span></div>
+    <div class="par">
+        <div class="celda plano"><span>plano</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+        <div class="celda tallado"><span>tallado</span>
+            <p class="t caps">Espejos y Marcos</p></div>
+    </div>
+</div>
+
+</body>
+</html>

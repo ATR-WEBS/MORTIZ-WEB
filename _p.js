@@ -80,7 +80,7 @@
             ` assets/img/catalogo/${product.img}-640w.webp 640w`;
         img.sizes = SIZES;
         img.alt = "";
-        img.loading = "lazy";
+        
         img.decoding = "async";
 
         const caption = node("div", "piece__caption");
@@ -445,4 +445,22 @@
     setTimeout(openIntro, Math.max(0, duration("--intro-dusk") - performance.now()));
     addEventListener("click", openIntro, {signal: skip.signal});
     addEventListener("keydown", openIntro, {signal: skip.signal});
+})();
+
+(() => {
+    const q = (sel) => document.querySelector(sel);
+    const L = (el) => el ? Math.round(el.getBoundingClientRect().left * 10) / 10 : "n/a";
+    const R = (el) => el ? Math.round(el.getBoundingClientRect().right * 10) / 10 : "n/a";
+    const rows = [
+        ["collection", q(".collection")],
+        ["collection__head", q(".collection__head")],
+        ["back (boton)", q(".collection__back")],
+        ["pieces", q(".pieces")],
+        ["1er piece", q(".piece")],
+        ["1er piece__frame", q(".piece__frame")]
+    ];
+    const out = document.createElement("pre");
+    out.textContent = rows.map(([n, el]) => n.padEnd(18) + " left=" + L(el) + "  right=" + R(el)).join("\n");
+    out.style.cssText = "position:fixed;top:0;left:0;z-index:999999;background:#fff;color:#000;font:14px monospace;padding:10px;white-space:pre";
+    document.body.append(out);
 })();
